@@ -1,196 +1,80 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UMKM Order System</title>
-    <style>
-        :root {
-            --pink1: #FFB6C1;
-            --pink2: #FFD1DC;
-            --pink3: #FFE4E1;
-            --pink4: #FFF0F5;
-            --cream: #FAEBD7;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: var(--cream);
-        }
-
-        .header {
-            text-align: center;
-            padding: 20px;
-            background-color: var(--pink1);
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-
-        .option-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .option-btn {
-            padding: 20px;
-            background-color: var(--pink2);
-            border: none;
-            border-radius: 8px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .product-card {
-            background-color: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .quantity-control {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        input[type="number"] {
-            width: 60px;
-            padding: 5px;
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
+    <title>Selamat Datang di Warung Mama Uci</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Halaman Utama -->
-    <div id="mainPage">
-        <div class="header">
-            <h1>UMKM KITA</h1>
+    <header class="logo-container">
+        <div class="logo">
+            <img src="Logo.png" alt="Warung Mama Uci" class="logo-image">
         </div>
-        <div class="option-container">
-            <button class="option-btn" onclick="selectCategory('manis')">Makanan Manis</button>
-            <button class="option-btn" onclick="selectCategory('asin')">Makanan Asin</button>
+    </header>
+
+    <main class="content">
+        <div class="option-container" id="categorySelection">
+            <div class="option-box" onclick="selectCategory('asin')">
+                <i class="fas fa-burger"></i>
+                <h2>Makanan Asin</h2>
+                <p>Klik untuk melihat menu</p>
+            </div>
+            <div class="option-box" onclick="selectCategory('manis')">
+                <i class="fa-solid fa-cookie-bite"></i>
+                <h2>Makanan Manis</h2>
+                <p>Klik untuk melihat menu</p>
+            </div>
+        </div>
+        <!-- Tampilan Menu (awalnya hidden) -->
+        <div class="menu-container" id="menuSection" style="display: none;">
+            <div class="menu-header">
+                <button class="back-button" onclick="goBackToCategories()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 id="menuTitle"></h1>
+            </div>
+            <div class="menu-grid" id="menuItems"></div>
+        </div>
+    </main>
+
+    <!-- Modal Pesanan -->
+    <div class="order-modal" id="orderModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalItemName"></h2>
+            <p class="modal-price" id="modalPrice"></p>
+            <div class="quantity-control">
+                <button class="quantity-btn" onclick="adjustQuantity(-1)">-</button>
+                <input type="number" id="quantity" value="1" min="1">
+                <button class="quantity-btn" onclick="adjustQuantity(1)">+</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart()">Tambahkan ke Pesanan</button>
         </div>
     </div>
 
-    <!-- Halaman Produk -->
-    <div id="productPage" class="hidden">
-        <h2 id="categoryTitle"></h2>
-        <div class="product-grid" id="productGrid"></div>
-        <div id="totalSection">
-            <h3>Total Pesanan: Rp<span id="totalAmount">0</span></h3>
-            <button onclick="confirmOrder()">Lanjutkan Pembayaran</button>
-        </div>
+    <!-- Total Harga -->
+    <div class="total-container" id="totalContainer" style="display: none;">
+        Total Pesanan: <span id="totalAmount">Rp 0</span>
+        <button class="checkout-btn" onclick="checkout()">Lanjut ke Pembayaran</button>
     </div>
 
-    <!-- Halaman Pembayaran -->
-    <div id="paymentPage" class="hidden">
-        <h2>Metode Pembayaran</h2>
-        <select id="paymentMethod">
-            <option value="COD">COD</option>
-            <option value="Transfer">Transfer</option>
-        </select>
-        <div id="transferDetails" class="hidden">
-            <p>Nomor Rekening: 1234 5678 9012 (BCA)</p>
-            <input type="file" id="proofUpload" accept="image/*">
+    <!-- Checkout Section (disembunyikan secara default) -->
+    <div class="checkout-section" id="checkoutSection" style="display: none;">
+        <div class="checkout-header">
+            <button class="back-button" onclick="goBackFromCheckout()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Checkout</h1>
         </div>
-        <button onclick="submitOrder()">Kirim Pesanan</button>
+        <div class="order-summary" id="orderSummary"></div>
+        <div class="checkout-total">
+            Total: <span id="checkoutTotal">Rp 0</span>
+        </div>
+        <button class="confirm-checkout" onclick="confirmCheckout()">Konfirmasi Pesanan</button>
     </div>
 
-    <script>
-        let cart = {};
-        let productsData = []; // Menyimpan data produk dari Google Sheets
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbx69CgzEitW_tEwXZk3A9xSDCUcBmzyG22vmCnc3tJpnpChF8FuTr6-k5EJGAvuF6KLmA/exec'; // Ganti dengan URL Apps Script
-
-        // Fungsi untuk memuat produk berdasarkan kategori
-        async function selectCategory(category) {
-            document.getElementById('mainPage').classList.add('hidden');
-            document.getElementById('productPage').classList.remove('hidden');
-            document.getElementById('categoryTitle').textContent = `Menu ${category}`;
-            
-            // Ambil data produk dari Google Sheets
-            const response = await fetch(`${scriptURL}?action=getProducts&category=${category}`);
-            productsData = await response.json();
-            
-            // Tampilkan produk
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = productsData.map(product => `
-                <div class="product-card">
-                    <h3>${product.nama}</h3>
-                    <img src="${product.gambar}" width="100%">
-                    <p>Harga: Rp${product.harga}</p>
-                    <div class="quantity-control">
-                        <button onclick="updateQuantity('${product.id}', -1)">-</button>
-                        <input type="number" id="qty-${product.id}" value="0" min="0">
-                        <button onclick="updateQuantity('${product.id}', 1)">+</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Update kuantitas dan hitung total
-        function updateQuantity(productId, delta) {
-            const input = document.getElementById(`qty-${productId}`);
-            const newValue = Math.max(0, parseInt(input.value) + delta);
-            input.value = newValue;
-            cart[productId] = newValue;
-            calculateTotal();
-        }
-
-        // Hitung total harga
-        function calculateTotal() {
-            let total = 0;
-            for (const productId in cart) {
-                const product = productsData.find(p => p.id === productId);
-                if (product && cart[productId] > 0) {
-                    total += product.harga * cart[productId];
-                }
-            }
-            document.getElementById('totalAmount').textContent = total;
-        }
-
-        // Konfirmasi pesanan
-        function confirmOrder() {
-            if (confirm("Apakah pesanan sudah benar?")) {
-                document.getElementById('productPage').classList.add('hidden');
-                document.getElementById('paymentPage').classList.remove('hidden');
-            }
-        }
-
-        // Kirim pesanan ke Google Sheets
-        async function submitOrder() {
-            const paymentMethod = document.getElementById('paymentMethod').value;
-            const formData = {
-                items: cart,
-                total: document.getElementById('totalAmount').textContent,
-                paymentMethod: paymentMethod,
-                timestamp: new Date().toISOString()
-            };
-
-            await fetch(scriptURL, {
-                method: 'POST',
-                body: JSON.stringify(formData)
-            });
-            
-            alert("Terima kasih! Pesanan Anda telah dikirim.");
-            location.reload(); // Reset halaman
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
