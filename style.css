@@ -1,3 +1,4 @@
+
 /* Universal Styles */
 * {
     margin: 0;
@@ -8,6 +9,7 @@
     -moz-user-select: none;     /* Disable text selection (Firefox) */
     -ms-user-select: none;      /* Disable text selection (IE 10+) */
     user-select: none;          /* Disable text selection (Standard) */
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Hide spinner for number inputs */
