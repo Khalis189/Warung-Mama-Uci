@@ -162,21 +162,24 @@ function checkout() {
 // Fungsi untuk mengisi ringkasan pesanan pada checkout section
 function populateCheckout() {
     const summaryContainer = document.getElementById('orderSummary');
-    summaryContainer.innerHTML = ''; // Kosongkan sebelum mengisi ulang
-
+    summaryContainer.innerHTML = '';
     currentOrders.forEach((order, index) => {
-        const orderDiv = document.createElement('div');
-        orderDiv.className = 'order-item';
-        orderDiv.innerHTML = `
-            <span>${order.item.name} x ${order.quantity}</span>
-            <span>Rp ${(order.item.price * order.quantity).toLocaleString()}</span>
-            <button class="edit-order-btn" onclick="editOrder(${index})">Edit</button>
-        `;
-        summaryContainer.appendChild(orderDiv);
+       const orderDiv = document.createElement('div');
+       orderDiv.className = 'order-item';
+       orderDiv.innerHTML = `
+           <div class="order-info">
+               <span class="order-name">${order.item.name} x ${order.quantity}</span>
+           </div>
+           <div class="order-price">
+               <span>Rp ${(order.item.price * order.quantity).toLocaleString()}</span>
+           </div>
+           <button class="edit-order-btn" onclick="editOrder(${index})">Edit</button>
+       `;
+       summaryContainer.appendChild(orderDiv);
     });
-
-    updateTotal(); // Pastikan total harga ikut diperbarui
+    updateTotal();
 }
+
 
 function goBackFromCheckout() {
     document.getElementById('checkoutSection').style.display = 'none';

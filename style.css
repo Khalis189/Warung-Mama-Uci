@@ -408,8 +408,18 @@ body {
 
 .order-summary .order-item {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
+}
+
+.order-info {
+    flex: 2;
+}
+
+.order-price {
+    flex: 1;
+    text-align: right;
 }
 
 .checkout-total {
@@ -438,13 +448,13 @@ body {
 
 /* Styling untuk tombol Edit pada ringkasan pesanan */
 .edit-order-btn {
+    margin-left: 10px;
     background: transparent;
     border: none;
     color: #f93131;
     font-size: 0.9em;
     cursor: pointer;
     transition: color 0.3s ease;
-    margin-left: 10px;
 }
 
 .edit-order-btn:hover {
