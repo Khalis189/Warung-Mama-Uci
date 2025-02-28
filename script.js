@@ -127,26 +127,37 @@ function updateTotal() {
     currentOrders.forEach(order => {
         total += order.item.price * order.quantity;
     });
-
     document.getElementById('totalAmount').textContent = `Rp ${total.toLocaleString()}`;
     document.getElementById('checkoutTotal').textContent = `Rp ${total.toLocaleString()}`;
-
-    // Tampilkan atau sembunyikan total container berdasarkan ada tidaknya pesanan
-    const totalContainer = document.getElementById('totalContainer');
-    totalContainer.style.display = (total > 0) ? 'flex' : 'none';
+    
+    // Jika sedang berada di halaman checkout, pastikan totalContainer tetap disembunyikan
+    if (document.getElementById('checkoutSection').style.display === 'block') {
+        document.getElementById('totalContainer').style.display = 'none';
+    } else {
+        // Jika total > 0, tampilkan totalContainer; jika tidak, sembunyikan
+        document.getElementById('totalContainer').style.display = (total > 0) ? 'flex' : 'none';
+    }
+    
+    // Jika total pesanan menjadi 0 saat di halaman checkout, kembali ke tampilan kategori
+    if (total === 0 && document.getElementById('checkoutSection').style.display === 'block') {
+        document.getElementById('checkoutSection').style.display = 'none';
+        document.getElementById('categorySelection').style.display = 'flex';
+        document.getElementById('menuSection').style.display = 'none';
+    }
 }
 
-// Fungsi Checkout yang diperbarui
 function checkout() {
     if (currentOrders.length === 0) {
         alert('Silahkan pilih menu terlebih dahulu!');
         return;
     }
-    document.getElementById('menuSection').style.display = 'none';
+    // Saat checkout, sembunyikan totalContainer sehingga hanya checkoutSection yang tampil
     document.getElementById('totalContainer').style.display = 'none';
+    document.getElementById('menuSection').style.display = 'none';
     document.getElementById('checkoutSection').style.display = 'block';
     populateCheckout();
 }
+
 
 // Fungsi untuk mengisi ringkasan pesanan pada checkout section
 function populateCheckout() {
