@@ -88,7 +88,7 @@ body {
     background: radial-gradient(circle at 50% 0%, rgba(236,240,241,0.5) 0%, rgba(236,240,241,0) 50%);
 }
 
-/* Update pada option-container untuk memusatkan tombol secara vertikal */
+/* Memusatkan tombol kategori secara vertikal dan horizontal */
 .option-container {
     display: flex;
     gap: 30px;
@@ -96,7 +96,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    min-height: 70vh; /* Memastikan container menempati ruang penuh secara vertikal */
+    min-height: 70vh;
 }
 
 .option-box {
@@ -434,4 +434,19 @@ body {
 .confirm-checkout:hover {
     background: #e51d1d;
     transform: scale(1.05);
+}
+
+/* Styling untuk tombol Edit pada ringkasan pesanan */
+.edit-order-btn {
+    background: transparent;
+    border: none;
+    color: #f93131;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-left: 10px;
+}
+
+.edit-order-btn:hover {
+    color: #e51d1d;
 }
