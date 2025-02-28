@@ -1,4 +1,15 @@
-// script.js
+// Fungsi untuk memulai pemesanan dari landing page
+function startOrdering() {
+    const landing = document.getElementById('landingContainer');
+    landing.classList.add('fade-out');
+    setTimeout(() => {
+        landing.style.display = 'none';
+        const mainContent = document.getElementById('mainContent');
+        mainContent.style.display = 'block';
+        mainContent.classList.add('fade-in');
+    }, 800); // Durasi animasi fadeOut (0.8 detik)
+}
+
 let currentCategory = null;
 let selectedItem = null;
 let currentOrders = [];
@@ -96,20 +107,17 @@ function updateTotal() {
     }
 }
 
-// Fungsi Checkout yang diperbarui
 function checkout() {
     if (currentOrders.length === 0) {
         alert('Silahkan pilih menu terlebih dahulu!');
         return;
     }
-    // Sembunyikan tampilan menu dan total, tampilkan checkout section
     document.getElementById('menuSection').style.display = 'none';
     document.getElementById('totalContainer').style.display = 'none';
     document.getElementById('checkoutSection').style.display = 'block';
     populateCheckout();
 }
 
-// Fungsi untuk mengisi ringkasan pesanan pada checkout section
 function populateCheckout() {
     const summaryContainer = document.getElementById('orderSummary');
     summaryContainer.innerHTML = '';
@@ -126,24 +134,19 @@ function populateCheckout() {
     document.getElementById('checkoutTotal').textContent = `Rp ${total.toLocaleString()}`;
 }
 
-// Fungsi untuk kembali ke tampilan menu dari checkout
 function goBackFromCheckout() {
     document.getElementById('checkoutSection').style.display = 'none';
     document.getElementById('menuSection').style.display = 'block';
 }
 
-// Fungsi untuk mengonfirmasi pesanan (saat ini hanya simulasi)
 function confirmCheckout() {
-    // Simulasi konfirmasi pesanan, misalnya dengan menampilkan alert
     alert('Pesanan Anda telah dikonfirmasi! Terima kasih.');
-    // Setelah konfirmasi, reset pesanan dan kembali ke tampilan kategori
     currentOrders = [];
     updateTotal();
     document.getElementById('checkoutSection').style.display = 'none';
     document.getElementById('categorySelection').style.display = 'flex';
 }
 
-// Close modal saat klik di luar area modal
 window.onclick = function(event) {
     const modal = document.getElementById('orderModal');
     if (event.target === modal) {

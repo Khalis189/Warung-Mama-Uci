@@ -8,12 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header class="logo-container">
-        <div class="logo">
-            <img src="Logo.jpg" alt="Warung Mama Uci" class="logo-image">
+    <!-- Landing Page -->
+    <div class="landing-container" id="landingContainer">
+        <div class="landing-content">
+            <img src="Logo.jpg" alt="CrunchyCubs Kitchen" class="landing-logo">
+            <h1>Selamat Datang di CrunchyCubs Kitchen</h1>
+            <button class="start-order-btn" onclick="startOrdering()">Mulai Pesan</button>
         </div>
-    </header>
-    <main class="content">
+    </div>
+
+    <!-- Main Content (tersembunyi awalnya) -->
+    <main class="content" id="mainContent" style="display: none;">
         <div class="option-container" id="categorySelection">
             <div class="option-box" onclick="selectCategory('asin')">
                 <i class="fas fa-burger"></i>

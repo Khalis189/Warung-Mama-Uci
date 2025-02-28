@@ -4,6 +4,10 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-user-select: none;  /* Disable text selection (Chrome, Safari) */
+    -moz-user-select: none;     /* Disable text selection (Firefox) */
+    -ms-user-select: none;      /* Disable text selection (IE 10+) */
+    user-select: none;          /* Disable text selection (Standard) */
 }
 
 /* Hide spinner for number inputs */
@@ -20,41 +24,61 @@ body {
     background-color: #ecf0f1; /* Latar belakang abu-abu muda */
 }
 
-.logo-container {
-    padding: 20px 0;
-    background-color: #f7e9c6; /* Header dengan warna #f7e9c6 */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+/* Animasi */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-20px); }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease forwards;
+}
+
+.fade-out {
+    animation: fadeOut 0.8s ease forwards;
+}
+
+/* Landing Page */
+.landing-container {
     display: flex;
+    align-items: center;
     justify-content: center;
+    height: 100vh;
+    background-color: #f7e9c6;
 }
 
-.logo {
-    max-width: 80vw;
-    width: 400px;
-    padding: 0 20px;
+.landing-content {
+    text-align: center;
+    animation: fadeIn 1s ease;
 }
 
-.logo-image {
-    width: 100%;
-    height: auto;
+.landing-logo {
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.start-order-btn {
+    background: #f93131;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 1.2em;
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-/* Untuk layar kecil (mobile) */
-@media (max-width: 768px) {
-    .logo {
-        width: 250px;
-        max-width: 90%;
-    }
+.start-order-btn:hover {
+    background: #e51d1d;
+    transform: scale(1.05);
 }
 
-/* Untuk layar sangat kecil */
-@media (max-width: 480px) {
-    .logo {
-        width: 200px;
-    }
-}
-
+/* Konten Utama */
 .content {
     min-height: calc(70vh);
     display: flex;
@@ -64,11 +88,15 @@ body {
     background: radial-gradient(circle at 50% 0%, rgba(236,240,241,0.5) 0%, rgba(236,240,241,0) 50%);
 }
 
+/* Update pada option-container untuk memusatkan tombol secara vertikal */
 .option-container {
     display: flex;
     gap: 30px;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 70vh; /* Memastikan container menempati ruang penuh secara vertikal */
 }
 
 .option-box {
@@ -92,7 +120,7 @@ body {
 
 .option-box h2 {
     margin: 20px 0 10px;
-    color: #f93131; /* Warna aksen untuk judul */
+    color: #f93131;
     font-weight: 600;
     font-size: 1.5em;
 }
@@ -104,13 +132,13 @@ body {
 }
 
 .option-box i {
-    color: #f93131; /* Warna aksen untuk ikon */
+    color: #f93131;
     display: inline-block;
     transition: color 0.3s ease;
 }
 
 .option-box:hover i {
-    color: #e51d1d; /* Variasi hover */
+    color: #e51d1d;
 }
 
 @media (max-width: 768px) {
@@ -137,7 +165,7 @@ body {
 }
 
 .back-button {
-    background: #f93131; /* Warna aksen button */
+    background: #f93131;
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -148,7 +176,7 @@ body {
 }
 
 .back-button:hover {
-    background: #e51d1d; /* Hover: warna lebih gelap */
+    background: #e51d1d;
     transform: scale(1.1);
 }
 
@@ -176,7 +204,7 @@ body {
 }
 
 .menu-item h3 {
-    color: #f93131; /* Warna aksen untuk judul menu */
+    color: #f93131;
     margin: 15px 0 10px;
 }
 
@@ -188,12 +216,12 @@ body {
 
 .price {
     font-weight: bold;
-    color: #f93131; /* Warna aksen untuk harga */
+    color: #f93131;
     margin-top: 15px;
     font-size: 1.2em;
 }
 
-/* Styling untuk gambar pada menu item */
+/* Gambar pada menu item */
 .menu-item img.menu-image {
     width: 100%;
     height: auto;
@@ -244,7 +272,7 @@ body {
 }
 
 .quantity-btn {
-    background: #f93131; /* Warna aksen untuk tombol */
+    background: #f93131;
     border: none;
     width: 40px;
     height: 40px;
@@ -269,7 +297,7 @@ body {
 }
 
 .add-to-cart {
-    background: #f93131; /* Warna aksen untuk tombol */
+    background: #f93131;
     color: white;
     border: none;
     padding: 12px 30px;
@@ -301,12 +329,12 @@ body {
 
 .total-container span {
     font-weight: bold;
-    color: #f93131; /* Warna aksen untuk total harga */
+    color: #f93131;
     font-size: 1.2em;
 }
 
 .checkout-btn {
-    background: #f93131; /* Warna aksen untuk tombol checkout */
+    background: #f93131;
     color: white;
     border: none;
     padding: 12px 30px;
@@ -320,40 +348,39 @@ body {
     transform: scale(1.05);
 }
 
-/* Media Query untuk layar handphone */
 @media (max-width: 480px) {
-  .option-box {
-    padding: 20px 30px;
-    font-size: 0.9em;
-  }
+    .option-box {
+        padding: 20px 30px;
+        font-size: 0.9em;
+    }
   
-  .menu-container {
-    padding: 10px;
-  }
+    .menu-container {
+        padding: 10px;
+    }
   
-  .menu-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
+    .menu-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
   
-  .back-button {
-    width: 35px;
-    height: 35px;
-    font-size: 0.9em;
-  }
+    .back-button {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9em;
+    }
   
-  .menu-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-    padding: 10px;
-  }
+    .menu-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        padding: 10px;
+    }
   
-  .total-container {
-    padding: 15px;
-    font-size: 0.9em;
-  }
+    .total-container {
+        padding: 15px;
+        font-size: 0.9em;
+    }
 }
 
 /* Checkout Section Styling */
@@ -393,7 +420,7 @@ body {
 }
 
 .confirm-checkout {
-    background: #f93131; /* Warna aksen untuk tombol konfirmasi */
+    background: #f93131;
     color: white;
     border: none;
     padding: 15px;
