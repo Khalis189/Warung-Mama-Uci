@@ -1,8 +1,24 @@
+// Fungsi untuk memperbarui teks tombol pada modal berdasarkan kuantitas dan mode edit
+function updateModalButtonText() {
+    const quantity = parseInt(document.getElementById('quantity').value);
+    const btn = document.querySelector('.add-to-cart');
+    if (editingOrderIndex !== null) {
+        btn.textContent = (quantity === 0) ? 'Hapus Pesanan' : 'Ubah Jumlah Pesanan';
+    } else {
+        btn.textContent = 'Tambahkan ke Pesanan';
+    }
+}
+
+// Tambahkan event listener agar setiap perubahan pada input kuantitas memicu update teks tombol
+document.getElementById('quantity').addEventListener('input', updateModalButtonText);
+
 // Deklarasi variabel global
 let currentCategory = null;
 let selectedItem = null;
-let editingOrderIndex = null;  // Variabel untuk menandai index pesanan yang sedang diedit
+let editingOrderIndex = null;  // Menandai index pesanan yang sedang diedit
 let currentOrders = [];
+let isCheckout = false; // Flag untuk mode checkout
+
 let menuItems = {
     asin: [
         { id: 1, name: "Nasi Goreng Spesial", price: 25000, description: "Nasi goreng dengan campuran seafood dan sayuran", image: "https://raw.githubusercontent.com/Khalis189/Warung-Mama-Uci/refs/heads/main/Cireng.jpg" },
@@ -57,14 +73,15 @@ function goBackToCategories() {
     currentCategory = null;
 }
 
-// Fungsi untuk menampilkan modal pemesanan (untuk penambahan pesanan baru)
+// Fungsi untuk menampilkan modal pesanan (untuk penambahan baru)
 function showOrderModal(item) {
-    editingOrderIndex = null;  // Reset state edit
+    editingOrderIndex = null;  // Reset mode edit
     selectedItem = item;
     document.getElementById('orderModal').style.display = 'flex';
     document.getElementById('modalItemName').textContent = item.name;
     document.getElementById('modalPrice').textContent = `Rp ${item.price.toLocaleString()}`;
     document.getElementById('quantity').value = 1;
+    updateModalButtonText();
 }
 
 // Fungsi untuk mengedit pesanan yang sudah ada
@@ -76,6 +93,7 @@ function editOrder(index) {
     document.getElementById('modalItemName').textContent = order.item.name;
     document.getElementById('modalPrice').textContent = `Rp ${order.item.price.toLocaleString()}`;
     document.getElementById('quantity').value = order.quantity;
+    updateModalButtonText();
 }
 
 function closeModal() {
@@ -89,18 +107,18 @@ function adjustQuantity(change) {
     let newValue = parseInt(quantityInput.value) + change;
     if (newValue < 0) newValue = 0;  // Izinkan nilai 0, tetapi tidak negatif
     quantityInput.value = newValue;
+    updateModalButtonText();
 }
 
 function addToCart() {
     const quantity = parseInt(document.getElementById('quantity').value);
     
-    // Jika quantity 0 dan sedang dalam mode edit, hapus item dari keranjang
+    // Jika quantity 0 dan dalam mode edit, hapus pesanan
     if (quantity === 0) {
         if (editingOrderIndex !== null) {
-            currentOrders.splice(editingOrderIndex, 1); // Hapus item dari array
+            currentOrders.splice(editingOrderIndex, 1);
         }
     } else {
-        // Jika dalam mode edit, update pesanan yang ada
         if (editingOrderIndex !== null) {
             currentOrders[editingOrderIndex].quantity = quantity;
         } else {
@@ -115,10 +133,10 @@ function addToCart() {
             }
         }
     }
-
+    
     editingOrderIndex = null;
     updateTotal();
-    populateCheckout(); // Pastikan ringkasan pesanan ikut ter-update
+    populateCheckout();
     closeModal();
 }
 
@@ -130,16 +148,17 @@ function updateTotal() {
     document.getElementById('totalAmount').textContent = `Rp ${total.toLocaleString()}`;
     document.getElementById('checkoutTotal').textContent = `Rp ${total.toLocaleString()}`;
     
-    // Jika sedang berada di halaman checkout, pastikan totalContainer tetap disembunyikan
-    if (document.getElementById('checkoutSection').style.display === 'block') {
+    if (isCheckout) {
+        // Saat checkout aktif, sembunyikan totalContainer
         document.getElementById('totalContainer').style.display = 'none';
     } else {
-        // Jika total > 0, tampilkan totalContainer; jika tidak, sembunyikan
+        // Jika total > 0 dan tidak dalam mode checkout, tampilkan totalContainer
         document.getElementById('totalContainer').style.display = (total > 0) ? 'flex' : 'none';
     }
     
-    // Jika total pesanan menjadi 0 saat di halaman checkout, kembali ke tampilan kategori
-    if (total === 0 && document.getElementById('checkoutSection').style.display === 'block') {
+    // Jika total menjadi 0 saat checkout aktif, kembalikan ke tampilan kategori
+    if (total === 0 && isCheckout) {
+        isCheckout = false;
         document.getElementById('checkoutSection').style.display = 'none';
         document.getElementById('categorySelection').style.display = 'flex';
         document.getElementById('menuSection').style.display = 'none';
@@ -151,15 +170,13 @@ function checkout() {
         alert('Silahkan pilih menu terlebih dahulu!');
         return;
     }
-    // Saat checkout, sembunyikan totalContainer sehingga hanya checkoutSection yang tampil
+    isCheckout = true;
     document.getElementById('totalContainer').style.display = 'none';
     document.getElementById('menuSection').style.display = 'none';
     document.getElementById('checkoutSection').style.display = 'block';
     populateCheckout();
 }
 
-
-// Fungsi untuk mengisi ringkasan pesanan pada checkout section
 function populateCheckout() {
     const summaryContainer = document.getElementById('orderSummary');
     summaryContainer.innerHTML = '';
@@ -180,11 +197,10 @@ function populateCheckout() {
     updateTotal();
 }
 
-
 function goBackFromCheckout() {
     document.getElementById('checkoutSection').style.display = 'none';
     document.getElementById('menuSection').style.display = 'block';
-    // Pesanan yang sudah ada tetap dipertahankan untuk diedit
+    isCheckout = false;
 }
 
 function confirmCheckout() {
@@ -193,6 +209,7 @@ function confirmCheckout() {
     updateTotal();
     document.getElementById('checkoutSection').style.display = 'none';
     document.getElementById('categorySelection').style.display = 'flex';
+    isCheckout = false;
 }
 
 window.onclick = function(event) {

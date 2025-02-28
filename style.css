@@ -57,6 +57,11 @@ body {
     animation: fadeIn 1s ease;
 }
 
+.landing-content h1 {
+    font-size: 2em;       /* Mengurangi ukuran tulisan selamat datang */
+    margin-bottom: 30px;  /* Menambahkan jarak antara tulisan dengan tombol */
+}
+
 .landing-logo {
     max-width: 300px;
     margin-bottom: 20px;
@@ -132,8 +137,10 @@ body {
 }
 
 .option-box i {
+    font-size: 2.5em;    /* Memperbesar ukuran ikon */
+    display: block;      /* Menampilkan ikon sebagai block agar bisa diberi margin */
+    margin-bottom: 10px;  /* Jarak antara ikon dengan teks judul */
     color: #f93131;
-    display: inline-block;
     transition: color 0.3s ease;
 }
 
@@ -224,10 +231,10 @@ body {
 /* Gambar pada menu item */
 .menu-item img.menu-image {
     width: 100%;
-    height: auto;
+    max-height: 38vh;
+    object-fit: cover;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
-    object-fit: cover;
     margin-bottom: 15px;
 }
 
