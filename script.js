@@ -4,6 +4,7 @@ let selectedItem = null;
 let editingOrderIndex = null;  // Menandai index pesanan yang sedang diedit
 let currentOrders = [];
 let isCheckout = false; // Flag untuk mode checkout
+const endpointURL = 'https://script.google.com/macros/s/AKfycbwuPRPdNCAtwO05Cih5LPWn5ZUADaYANOtxOwxXABf7_3sY24Jv1Ap0eZYvnjqzmOML/exec';
 
 // Inisialisasi menuItems sebagai objek kosong (akan diisi melalui API)
 let menuItems = {
@@ -13,7 +14,7 @@ let menuItems = {
 
 // Fungsi untuk mengambil data menu dari Google Sheets melalui Google Apps Script
 function fetchMenuItems() {
-    fetch('https://script.google.com/macros/s/AKfycbwuPRPdNCAtwO05Cih5LPWn5ZUADaYANOtxOwxXABf7_3sY24Jv1Ap0eZYvnjqzmOML/exec')
+    fetch(endpointURL)
         .then(response => response.json())
         .then(data => {
             console.log("Fetched raw data:", data);
@@ -334,7 +335,8 @@ document.getElementById("paymentDetailsForm").addEventListener("submit", functio
 });
 
 function submitOrder(orderData) {
-    fetch('https://script.google.com/macros/s/AKfycbwuPRPdNCAtwO05Cih5LPWn5ZUADaYANOtxOwxXABf7_3sY24Jv1Ap0eZYvnjqzmOML/exec', {
+    console.log("Mengirim orderData:", orderData);
+    fetch(endpointURL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -343,6 +345,7 @@ function submitOrder(orderData) {
     })
     .then(response => response.json())
     .then(result => {
+        console.log("Response dari server:", result);
         if(result.status === 'success'){
             alert('Pesanan Anda telah dikonfirmasi!');
             currentOrders = [];
@@ -357,6 +360,7 @@ function submitOrder(orderData) {
     })
     .catch(err => console.error('Error submitting order:', err));
 }
+
 
 window.onclick = function(event) {
     const modal = document.getElementById('orderModal');
