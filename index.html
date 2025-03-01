@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="icon" href="Logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
     <!-- Landing Page -->
@@ -99,8 +101,11 @@
                 <label for="customerWhatsapp">Nomor Whatsapp:</label>
                 <input type="tel" id="customerWhatsapp" name="customerWhatsapp" required>
                 
-                <label for="customerAddress">Alamat:</label>
+                <label for="customerAddress">Alamat: / Darimana?</label>
                 <textarea id="customerAddress" name="customerAddress" required></textarea>
+
+                <label for="orderDate">Untuk kapan?</label>
+                <input type="date" id="orderDate" name="orderDate" required>
                 
                 <p>Pilih metode pembayaran:</p>
                 <label>

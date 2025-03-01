@@ -60,7 +60,8 @@ body {
 
 .landing-logo {
     max-width: 300px;
-    margin-bottom: 20px;
+    margin: 0 auto 20px; /* margin auto untuk center, margin bawah 20px */
+    display: block;
 }
 
 .start-order-btn {
@@ -149,6 +150,12 @@ body {
     display: block;
     margin: 20px auto; /* Memberikan jarak atas dan mengatur gambar di tengah */
     max-width: 350px; /* Atur ukuran sesuai kebutuhan */
+}
+
+@media (min-width: 1024px) {
+    .option-box {
+        max-width: 350px; /* Tambahan lebar agar teks muat dalam satu baris */
+    }
 }
 
 @media (max-width: 768px) {

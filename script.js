@@ -265,6 +265,8 @@ document.getElementById("paymentDetailsForm").addEventListener("submit", functio
     
     var nameInput = document.getElementById("customerName").value.trim();
     var phoneInput = document.getElementById("customerWhatsapp").value.trim();
+    var addressInput = document.getElementById("customerAddress").value.trim();
+    var dateInput = document.getElementById("orderDate").value;
     
     var errors = [];
     
@@ -279,6 +281,23 @@ document.getElementById("paymentDetailsForm").addEventListener("submit", functio
         errors.push("Nomor Whatsapp harus berupa angka dan terdiri dari minimal 10 digit.");
     }
     
+    // Validasi: Alamat minimal 10 karakter
+    if (addressInput.length < 10) {
+        errors.push("Alamat harus terdiri dari minimal 10 karakter.");
+    }
+    
+    // Validasi: Tanggal pre-order harus diisi dan minimal besok
+    if (!dateInput) {
+        errors.push("Silakan isi tanggal untuk pre-order.");
+    } else {
+        var selectedDate = new Date(dateInput);
+        var today = new Date();
+        var tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+        if (selectedDate < tomorrow) {
+            errors.push("Tanggal minimal untuk pre-order adalah besok.");
+        }
+    }
+    
     // Jika ada error, tampilkan pesan error secara inline
     if (errors.length > 0) {
         errorContainer.innerHTML = errors.join("<br>");
@@ -288,7 +307,20 @@ document.getElementById("paymentDetailsForm").addEventListener("submit", functio
     
     // Jika validasi berhasil, sembunyikan bagian checkout dan tampilkan pesan konfirmasi
     document.getElementById("checkoutSection").innerHTML = "<p style='color: green; text-align: center; font-size: 1.5em; margin: 20px 0;'>Pesanan Anda telah dikonfirmasi!</p>";
-    
-    // Optional: Anda bisa melakukan tindakan lain, seperti mereset form atau mengosongkan keranjang pesanan
+});
+
+
+// Set min attribute untuk input orderDate agar tidak bisa memilih tanggal sebelum besok
+document.addEventListener("DOMContentLoaded", function() {
+    flatpickr("#orderDate", {
+        altInput: true,                // Menampilkan input yang lebih user-friendly
+        altFormat: "F j, Y",           // Format tampilan alternatif, misalnya "September 5, 2025"
+        dateFormat: "Y-m-d",            // Format nilai yang disimpan
+        minDate: "today",             // Bisa disesuaikan, misalnya "today" atau hitung tanggal besok
+        onReady: function(selectedDates, dateStr, instance) {
+            // Menonaktifkan input manual jika diinginkan:
+            instance.altInput.setAttribute("readonly", "readonly");
+        }
+    });
 });
 
