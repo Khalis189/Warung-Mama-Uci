@@ -282,8 +282,8 @@ document.getElementById("paymentDetailsForm").addEventListener("submit", functio
     }
     
     // Validasi: Alamat minimal 10 karakter
-    if (addressInput.length < 10) {
-        errors.push("Alamat harus terdiri dari minimal 10 karakter.");
+    if (addressInput.length < 5) {
+        errors.push("Alamat harus terdiri dari minimal 5 karakter.");
     }
     
     // Validasi: Tanggal pre-order harus diisi dan minimal besok
