@@ -481,3 +481,48 @@ main.content {
 .edit-order-btn:hover {
     color: #e51d1d;
 }
+
+
+/* Styling untuk form metode pembayaran di checkout */
+#paymentForm {
+    margin-top: 20px;
+}
+
+#paymentForm form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#paymentForm label {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+#paymentForm input[type="text"],
+#paymentForm input[type="tel"],
+#paymentForm textarea {
+    padding: 8px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+}
+
+#paymentForm input[type="file"] {
+    margin-top: 5px;
+}
+
+#paymentForm button {
+    background: #f93131;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+#paymentForm button:hover {
+    background: #e51d1d;
+    transform: scale(1.05);
+}

@@ -16,6 +16,7 @@
     <div class="landing-container" id="landingContainer">
         <div class="landing-content">
             <img src="Logo.jpg" alt="CrunchyCubs Kitchen" class="landing-logo">
+
             <button class="start-order-btn" onclick="startOrdering()">Mulai Pesan</button>
         </div>
     </div>
@@ -83,8 +84,46 @@
         <div class="checkout-total">
             Total: <span id="checkoutTotal">Rp 0</span>
         </div>
-        <button class="confirm-checkout" onclick="confirmCheckout()">Konfirmasi Pesanan</button>
+        <!-- Tombol awal: Pilih Metode Pembayaran -->
+        <button class="confirm-checkout" id="paymentMethodBtn" onclick="showPaymentForm()">Pilih Metode Pembayaran</button>
+
+        <!-- Form pembayaran, tersembunyi secara default -->
+        <div id="paymentForm" style="display: none;">
+            <form id="paymentDetailsForm">
+                <!-- Container untuk pesan error -->
+                <div id="paymentErrors" style="color: red; margin-bottom: 10px;"></div>
+                
+                <label for="customerName">Nama:</label>
+                <input type="text" id="customerName" name="customerName" required>
+                
+                <label for="customerWhatsapp">Nomor Whatsapp:</label>
+                <input type="tel" id="customerWhatsapp" name="customerWhatsapp" required>
+                
+                <label for="customerAddress">Alamat:</label>
+                <textarea id="customerAddress" name="customerAddress" required></textarea>
+                
+                <p>Pilih metode pembayaran:</p>
+                <label>
+                    <input type="radio" name="paymentMethod" value="COD" checked onclick="toggleTransferFields()">
+                    COD
+                </label>
+                <label>
+                    <input type="radio" name="paymentMethod" value="Transfer" onclick="toggleTransferFields()">
+                    Transfer
+                </label>
+
+                <!-- Field tambahan untuk metode Transfer -->
+                <div id="transferFields" style="display: none;">
+                    <p>Nomor Rekening Seller: 1234567890</p>
+                    <label for="proofUpload">Upload bukti transfer:</label>
+                    <input type="file" id="proofUpload" name="proofUpload" accept="image/*">
+                </div>
+                
+                <button type="submit" class="confirm-checkout">Konfirmasi Pesanan</button>
+            </form>
+        </div>
     </div>
+
 
     <script src="script.js"></script>
 </body>

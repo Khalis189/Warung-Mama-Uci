@@ -231,3 +231,64 @@ window.onclick = function(event) {
         closeModal();
     }
 }
+
+
+// Tampilkan form pembayaran saat tombol "Pilih Metode Pembayaran" diklik
+function showPaymentForm() {
+    document.getElementById("paymentMethodBtn").style.display = "none";
+    document.getElementById("paymentForm").style.display = "block";
+    // Scroll ke form pembayaran dengan animasi smooth
+    document.getElementById("paymentForm").scrollIntoView({ behavior: "smooth" });
+}
+
+
+// Tampilkan atau sembunyikan field transfer berdasarkan pilihan metode pembayaran
+function toggleTransferFields() {
+    var paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    if(paymentMethod === "Transfer") {
+        document.getElementById("transferFields").style.display = "block";
+        // Pastikan file upload diperlukan jika metode Transfer
+        document.getElementById("proofUpload").required = true;
+    } else {
+        document.getElementById("transferFields").style.display = "none";
+        document.getElementById("proofUpload").required = false;
+    }
+}
+
+// Tangani pengiriman form pembayaran
+document.getElementById("paymentDetailsForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    
+    // Kosongkan pesan error sebelumnya
+    var errorContainer = document.getElementById("paymentErrors");
+    errorContainer.innerHTML = "";
+    
+    var nameInput = document.getElementById("customerName").value.trim();
+    var phoneInput = document.getElementById("customerWhatsapp").value.trim();
+    
+    var errors = [];
+    
+    // Validasi: Nama minimal 3 karakter
+    if (nameInput.length < 3) {
+        errors.push("Nama harus terdiri dari minimal 3 karakter.");
+    }
+    
+    // Validasi: Nomor Whatsapp harus berupa angka dan minimal 10 digit
+    var phoneRegex = /^\d{10,}$/;
+    if (!phoneRegex.test(phoneInput)) {
+        errors.push("Nomor Whatsapp harus berupa angka dan terdiri dari minimal 10 digit.");
+    }
+    
+    // Jika ada error, tampilkan pesan error secara inline
+    if (errors.length > 0) {
+        errorContainer.innerHTML = errors.join("<br>");
+        errorContainer.scrollIntoView({ behavior: "smooth" });
+        return;
+    }
+    
+    // Jika validasi berhasil, sembunyikan bagian checkout dan tampilkan pesan konfirmasi
+    document.getElementById("checkoutSection").innerHTML = "<p style='color: green; text-align: center; font-size: 1.5em; margin: 20px 0;'>Pesanan Anda telah dikonfirmasi!</p>";
+    
+    // Optional: Anda bisa melakukan tindakan lain, seperti mereset form atau mengosongkan keranjang pesanan
+});
+
