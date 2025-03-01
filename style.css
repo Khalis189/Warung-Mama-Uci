@@ -23,7 +23,7 @@ input[type=number] {
 }
 
 body {
-    background-color: #ecf0f1; /* Latar belakang abu-abu muda */
+    background-color: #fff4e6;
 }
 
 /* Animasi */
@@ -112,17 +112,18 @@ body {
     text-align: center;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    background-color: #ffffff;
+    background-color: #f8f9fa;  /* Warna dasar baru di balik tombol */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    border: 1px solid #bdc3c7;
+    border: 1px solid #e0d8c2;
     max-width: 300px;
     width: 100%;
 }
 
+
 .option-box:hover {
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    background-color: #f8f9fa;
+    background-color: #fff4e6;
 }
 
 .option-box h2 {
@@ -164,6 +165,10 @@ body {
 .menu-container {
     width: 100%;
     padding: 10px;
+}
+
+main.content {
+    padding-bottom: 85px; /* Atur sesuai kebutuhan agar tidak tertutupi */
 }
 
 .menu-header {
@@ -396,7 +401,7 @@ body {
 .checkout-section {
     display: none;
     padding: 20px;
-    background-color: #ecf0f1;
+    background-color: #fff4e6;
     min-height: 70vh;
 }
 
