@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -60,7 +59,7 @@ body {
 
 .landing-logo {
     max-width: 300px;
-    margin: 0 auto 20px; /* margin auto untuk center, margin bawah 20px */
+    margin: 0 auto 20px;
     display: block;
 }
 
@@ -90,7 +89,6 @@ body {
     background: radial-gradient(circle at 50% 0%, rgba(236,240,241,0.5) 0%, rgba(236,240,241,0) 50%);
 }
 
-/* Memusatkan tombol kategori secara vertikal dan horizontal */
 .option-container {
     display: flex;
     gap: 30px;
@@ -107,13 +105,12 @@ body {
     text-align: center;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    background-color: #f8f9fa;  /* Warna dasar baru di balik tombol */
+    background-color: #f8f9fa;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     border: 1px solid #e0d8c2;
     max-width: 300px;
     width: 100%;
 }
-
 
 .option-box:hover {
     transform: translateY(-5px) scale(1.02);
@@ -135,9 +132,9 @@ body {
 }
 
 .option-box i {
-    font-size: 2.5em;    /* Memperbesar ukuran ikon */
-    display: block;      /* Menampilkan ikon sebagai block agar bisa diberi margin */
-    margin-bottom: 10px;  /* Jarak antara ikon dengan teks judul */
+    font-size: 2.5em;
+    display: block;
+    margin-bottom: 10px;
     color: #f93131;
     transition: color 0.3s ease;
 }
@@ -146,15 +143,22 @@ body {
     color: #e51d1d;
 }
 
+/* Tambahan info stok pada kartu menu */
+.stock {
+    font-size: 0.9em;
+    color: #2ecc71;
+    margin-top: 5px;
+}
+
 .side-image {
     display: block;
-    margin: 20px auto; /* Memberikan jarak atas dan mengatur gambar di tengah */
-    max-width: 350px; /* Atur ukuran sesuai kebutuhan */
+    margin: 20px auto;
+    max-width: 350px;
 }
 
 @media (min-width: 1024px) {
     .option-box {
-        max-width: 350px; /* Tambahan lebar agar teks muat dalam satu baris */
+        max-width: 350px;
     }
 }
 
@@ -175,7 +179,7 @@ body {
 }
 
 main.content {
-    padding-bottom: 85px; /* Atur sesuai kebutuhan agar tidak tertutupi */
+    padding-bottom: 85px;
 }
 
 .menu-header {
@@ -203,7 +207,7 @@ main.content {
 
 .menu-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
     gap: 30px;
     width: 100%;
     max-width: 1200px;
@@ -242,7 +246,12 @@ main.content {
     font-size: 1.2em;
 }
 
-/* Gambar pada menu item */
+.out-of-stock {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
 .menu-item img.menu-image {
     width: 100%;
     max-height: 38vh;
@@ -407,8 +416,8 @@ main.content {
 /* Checkout Section Styling */
 .checkout-banner {
     display: block;
-    margin: 10px auto; /* Jarak atas dan bawah, gambar berada di tengah */
-    max-width: 100%;   /* Sesuaikan lebar maksimal gambar, bisa diubah sesuai kebutuhan */
+    margin: 10px auto;
+    max-width: 100%;
     height: auto;
 }
 
@@ -474,7 +483,6 @@ main.content {
     transform: scale(1.05);
 }
 
-/* Styling untuk tombol Edit pada ringkasan pesanan */
 .edit-order-btn {
     margin-left: 10px;
     background: transparent;
@@ -489,8 +497,6 @@ main.content {
     color: #e51d1d;
 }
 
-
-/* Styling untuk form metode pembayaran di checkout */
 #paymentForm {
     margin-top: 20px;
 }
