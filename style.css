@@ -1,14 +1,13 @@
 
-/* Universal Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    -webkit-user-select: none;  /* Disable text selection (Chrome, Safari) */
-    -moz-user-select: none;     /* Disable text selection (Firefox) */
-    -ms-user-select: none;      /* Disable text selection (IE 10+) */
-    user-select: none;          /* Disable text selection (Standard) */
+    font-family: 'Poppins', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -57,11 +56,6 @@ body {
 .landing-content {
     text-align: center;
     animation: fadeIn 1s ease;
-}
-
-.landing-content h1 {
-    font-size: 2em;       /* Mengurangi ukuran tulisan selamat datang */
-    margin-bottom: 30px;  /* Menambahkan jarak antara tulisan dengan tombol */
 }
 
 .landing-logo {
