@@ -50,6 +50,9 @@ function selectCategory(category) {
     document.getElementById('menuSection').style.display = 'block';
     document.getElementById('menuTitle').textContent = `Menu ${category === 'asin' ? 'Makanan Asin' : 'Makanan Manis'}`;
     
+    // Sembunyikan gambar dekorasi saat kategori dipilih
+    document.getElementById('sideImage').style.display = 'none';
+    
     const menuContainer = document.getElementById('menuItems');
     menuContainer.innerHTML = '';
     
@@ -71,6 +74,9 @@ function goBackToCategories() {
     document.getElementById('categorySelection').style.display = 'flex';
     document.getElementById('menuSection').style.display = 'none';
     currentCategory = null;
+    
+    // Tampilkan kembali gambar dekorasi saat kembali ke tampilan kategori
+    document.getElementById('sideImage').style.display = 'block';
 }
 
 // Fungsi untuk menampilkan modal pesanan (untuk penambahan baru)
@@ -162,6 +168,8 @@ function updateTotal() {
         document.getElementById('checkoutSection').style.display = 'none';
         document.getElementById('categorySelection').style.display = 'flex';
         document.getElementById('menuSection').style.display = 'none';
+        // Tampilkan kembali gambar di pojok kiri bawah
+        document.getElementById('sideImage').style.display = 'block';
     }
 }
 
@@ -175,6 +183,9 @@ function checkout() {
     document.getElementById('menuSection').style.display = 'none';
     document.getElementById('checkoutSection').style.display = 'block';
     populateCheckout();
+    
+    // Scroll checkout section ke tampilan atas dengan animasi smooth
+    document.getElementById('checkoutSection').scrollIntoView({ behavior: 'smooth' });
 }
 
 function populateCheckout() {
@@ -209,6 +220,8 @@ function confirmCheckout() {
     updateTotal();
     document.getElementById('checkoutSection').style.display = 'none';
     document.getElementById('categorySelection').style.display = 'flex';
+    // Tampilkan kembali gambar di pojok kiri bawah
+    document.getElementById('sideImage').style.display = 'block';
     isCheckout = false;
 }
 

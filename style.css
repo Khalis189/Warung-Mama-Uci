@@ -151,6 +151,12 @@ body {
     color: #e51d1d;
 }
 
+.side-image {
+    display: block;
+    margin: 20px auto; /* Memberikan jarak atas dan mengatur gambar di tengah */
+    max-width: 350px; /* Atur ukuran sesuai kebutuhan */
+}
+
 @media (max-width: 768px) {
     .option-container {
         flex-direction: column;
@@ -398,6 +404,13 @@ main.content {
 }
 
 /* Checkout Section Styling */
+.checkout-banner {
+    display: block;
+    margin: 10px auto; /* Jarak atas dan bawah, gambar berada di tengah */
+    max-width: 100%;   /* Sesuaikan lebar maksimal gambar, bisa diubah sesuai kebutuhan */
+    height: auto;
+}
+
 .checkout-section {
     display: none;
     padding: 20px;
