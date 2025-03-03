@@ -4,7 +4,7 @@ let selectedItem = null;
 let editingOrderIndex = null;  // Menandai index pesanan yang sedang diedit
 let currentOrders = [];
 let isCheckout = false; // Flag untuk mode checkout
-const endpointURL = 'https://script.google.com/macros/s/AKfycbwuPRPdNCAtwO05Cih5LPWn5ZUADaYANOtxOwxXABf7_3sY24Jv1Ap0eZYvnjqzmOML/exec';
+const endpointURL = 'https://script.google.com/macros/s/AKfycbzmUOO-FlZkHemYTEdJ18hOddc0ZahATOrmlKDwb2kRRRALskHi7BZt_U_bGWRqWhtP/exec';
 
 // Inisialisasi menuItems sebagai objek kosong (akan diisi melalui API)
 let menuItems = {
@@ -350,7 +350,7 @@ document.getElementById("paymentDetailsForm").addEventListener("submit", functio
             };
             reader.readAsDataURL(file);
         } else {
-            orderData.proofTransfer = "";
+            orderData.proofTransfer = "NaN";
             submitOrder(orderData);
         }
     } else {
@@ -365,7 +365,7 @@ document.getElementById("paymentDetailsForm").addEventListener("submit", functio
 
 function submitOrder(orderData) {
     // Ganti URL di bawah dengan URL deployment web app Anda
-    fetch('https://script.google.com/macros/s/AKfycbwuPRPdNCAtwO05Cih5LPWn5ZUADaYANOtxOwxXABf7_3sY24Jv1Ap0eZYvnjqzmOML/exec', {
+    fetch(endpointURL, {
         method: 'POST',
         mode: 'no-cors', // nonaktifkan CORS
         headers: {
