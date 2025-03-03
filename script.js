@@ -290,6 +290,8 @@ document.getElementById("paymentDetailsForm").addEventListener("submit", functio
     var phoneInput = document.getElementById("customerWhatsapp").value.trim();
     var addressInput = document.getElementById("customerAddress").value.trim();
     var dateInput = document.getElementById("orderDate").value;
+    // Ambil metode pembayaran yang dipilih
+    var paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
     
     var errors = [];
     
@@ -323,19 +325,45 @@ document.getElementById("paymentDetailsForm").addEventListener("submit", functio
         return;
     }
     
-    // Jika validasi berhasil, sembunyikan bagian checkout dan tampilkan pesan konfirmasi
-    document.getElementById("checkoutSection").innerHTML = "<p style='color: green; text-align: center; font-size: 1.5em; margin: 20px 0;'>Pesanan Anda telah dikonfirmasi!</p>";
-
+    // Buat objek orderData
     const orderData = {
         customerName: nameInput,
         customerWhatsapp: phoneInput,
         customerAddress: addressInput,
         orderDate: dateInput,
+        paymentMethod: paymentMethod,
         orders: currentOrders
     };
     
-    submitOrder(orderData);
+    if(paymentMethod === "Transfer") {
+        // Jika metode transfer, baca file bukti transfer
+        var fileInput = document.getElementById("proofUpload");
+        if(fileInput.files.length > 0) {
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+            reader.onload = function(evt) {
+                // evt.target.result berisi string base64 (contoh: data:image/png;base64,....)
+                orderData.proofTransfer = evt.target.result;
+                console.log("Order Data dengan bukti transfer:", orderData);
+                submitOrder(orderData);
+            };
+            reader.onerror = function(error) {
+                console.error("Error membaca file:", error);
+                alert("Gagal membaca file bukti transfer.");
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // Jika tidak ada file, Anda bisa menetapkan string kosong atau mengingatkan pengguna
+            orderData.proofTransfer = "";
+            submitOrder(orderData);
+        }
+    } else {
+        console.log("Order Data:", orderData);
+        submitOrder(orderData);
+    }
 });
+
+
 
 function submitOrder(orderData) {
     // Ganti URL di bawah dengan URL deployment web app Anda
