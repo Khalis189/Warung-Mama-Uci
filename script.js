@@ -4,7 +4,7 @@ let selectedItem = null;
 let editingOrderIndex = null;  // Menandai index pesanan yang sedang diedit
 let currentOrders = [];
 let isCheckout = false; // Flag untuk mode checkout
-const endpointURL = 'https://script.google.com/macros/s/AKfycbzmUOO-FlZkHemYTEdJ18hOddc0ZahATOrmlKDwb2kRRRALskHi7BZt_U_bGWRqWhtP/exec';
+const endpointURL = 'https://script.google.com/macros/s/AKfycbxgMT32p9A32mOHWKozlElT-66RCAEhNJfZHDlLNoRbV_1PrRySrEhV-nim-py9i0MWSg/exec';
 
 // Inisialisasi menuItems sebagai objek kosong (akan diisi melalui API)
 let menuItems = {
