@@ -18,23 +18,13 @@ function fetchMenuItems() {
         .then(response => response.json())
         .then(data => {
             console.log("Fetched raw data:", data);
-            if (!data || data.length < 2) { // Minimal header + 1 baris data
-                console.error("Data tidak lengkap atau tidak ditemukan.");
+            if (!data || data.length === 0) {
+                console.error("Data tidak ditemukan.");
                 return;
             }
-            // Asumsikan baris pertama adalah header
-            let headers = data[0];
-            let items = data.slice(1).map(row => {
-                let item = {};
-                headers.forEach((header, index) => {
-                    item[header] = row[index];
-                });
-                return item;
-            });
-            console.log("Transformed items:", items);
-            // Filter berdasarkan kategori (pastikan header 'category' sesuai dengan yang ada di sheet)
-            menuItems.asin = items.filter(item => String(item.category).toLowerCase() === 'asin');
-            menuItems.manis = items.filter(item => String(item.category).toLowerCase() === 'manis');
+            // Karena data sudah berupa array objek, langsung filter berdasarkan kategori
+            menuItems.asin = data.filter(item => String(item.category).toLowerCase() === 'asin');
+            menuItems.manis = data.filter(item => String(item.category).toLowerCase() === 'manis');
             console.log("Menu asin:", menuItems.asin);
             console.log("Menu manis:", menuItems.manis);
         })
@@ -87,7 +77,6 @@ function selectCategory(category) {
         menuContainer.appendChild(menuItem);
     });
 }
-
 
 // Fungsi untuk kembali ke kategori
 function goBackToCategories() {
@@ -375,7 +364,7 @@ function submitOrder(orderData) {
       })
       .catch(err => console.error('Error submitting order:', err));
       
-  }
+}
   
 window.onclick = function(event) {
     const modal = document.getElementById('orderModal');
